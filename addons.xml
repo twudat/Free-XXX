@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.free-xxx-o-dus"
+	     name="FREE-XXX-O-DUS"
+	     version="5.00.022"
+	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668 : Set free by Twudat">
+  <requires>
+    <!-- <import addon="xbmc.python" version="2.24.0"/> -->
+    <import addon="script.module.echo"/>
+    <import addon="script.freexxxodus.artwork"/>
+    <import addon="script.freexxxodus.scrapers"/>
+    <import addon="script.module.resolveurl"/>
+    <import addon="script.module.resolveurl.xxx"/>
+    <import addon="script.module.pyxbmct"/>
+	<import addon="script.module.requests" />
+	<import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.html5lib" />
+	<import addon="script.module.six" />
+	<import addon="script.module.kodi-six" />
+	<!-- <import addon="script.module.nemzzy" /> -->
+    <!--<import addon="repository.colossus"/>-->
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">[B]Addon Originally Created By EchoCoder, Now Maintained by @Nemzzy668 :: Massive Credit to @_PYDEV_ KingKong for the pyxbmct work to provide a stunning interface to view the dialogs in this addon and the GitHub issues! Also A huge credit to jokstergfx for the icons and fanarts in this addon and many others! Thank you![/B]</summary>
+    <description lang="en">[COLOR white]FREE-XXX-O-DUS scrapes many websites to bring you hundreds of thousands of videos. Features of the addon include, history monitoring, favourites, downloadable videos, parental controls and more![/COLOR]
+
+[COLOR white]Websites Include: Porn.com, PornHD.com, Chaturbate.com, RedTube.com, Xhamster.com, YouPorn.com, PornFun.com, Motherless.com,Porn00.org, Spankbang.com, Virtualpornstars.com, Watchxxxfree.com, Perfectgirls.net, XNXX.com and many more.[/COLOR]</description>
+    <disclaimer lang="en">The pages of this addon are designed for ADULTS only and may include pictures and materials that some viewers may find offensive. If you are under the age of 18, if such material offends you or if it is illegal to view such material in your community please exit the addon.</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <website>https://github.com/Colossal1/plugin.video.free-xxx-o-dus</website>
+    <forum>https://github.com/Colossal1/plugin.video.free-xxx-o-dus</forum>
+    <assets>
+        <icon>icon.png</icon>
+        <fanart>fanart.jpg</fanart>
+    </assets>
+  </extension>
+</addon>
+
+<addon id="script.freexxxodus.artwork" version="5.00.001" name="FREEXXXODUS Artwork" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
+	<requires>
+		<!-- <import addon="xbmc.python" version="2.24.0"/> -->
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary>Artwork for FREEXXXODUS</summary>
+		<description>Artwork for FREEXXXODUS is maintained separately to make distribution of the the addon itself easier/faster.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.freexxxodus.scrapers" name="FREEXXXODUS Scrapers" version="5.00.017" provider-name="Original Echo Coder // Maintained NOW by @Nemzzy668">
+	<requires>
+		<!-- <import addon="xbmc.python" version="2.24.0" /> -->
+		<import addon="script.module.requests" />
+		<import addon="script.module.beautifulsoup4" />
+		<import addon="script.module.html5lib" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Scrapers for use in FREEXXXODUS</summary>
+	</extension>
+</addon>
+
+<addon id="script.module.echo" name="Echo Libraries" version="5.00.000" provider-name="Echo Coder">
+	<requires>
+		<!-- <import addon="xbmc.python" version="2.1.0" /> -->
+		<import addon="script.module.requests" />
+		<import addon="script.module.six" />
+		<import addon="script.module.kodi-six" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Forked from TK Norris Shared Module. Reusable Modules used by several of Echo's addons</summary>
+	</extension>
+</addon>
+
+<addon id="repository.free-xxx" name="Free XXX" version="001" provider-name="@Twudat">
+	<extension point="xbmc.addon.repository" name="free-xxx">
+		<dir>
+        <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+    </dir>
+		<dir>
+			<info compressed="false">https://github.com/twudat/Free-XXX/raw/main/addons.xml</info>
+			<checksum>https://github.com/twudat/Free-XXX/raw/main/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/twudat/Free-XXX/raw/main/zips/</datadir>
+		</dir>
+		<dir>
+			<info compressed="false">https://raw.githubusercontent.com/dobbelina/repository.dobbelina/master/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/dobbelina/repository.dobbelina/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/dobbelina/repository.dobbelina/master/</datadir>
+		</dir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Free-XXX</summary>
+		<description>Repo For free-xxx-o-dus and other FREE Adult Kodi Plugins, Bought to you by @Twudat</description>
+		<disclaimer>Educational use only, not for public release.</disclaimer>
+		<platform>all</platform>
+		<assets>
+				<icon>icon.png</icon>
+				<fanart>fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
+</addons>

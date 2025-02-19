@@ -92,9 +92,9 @@
         <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
     </dir>
 		<dir>
-			<info compressed="false">https://github.com/twudat/Free-XXX/raw/main/addons.xml</info>
-			<checksum>https://github.com/twudat/Free-XXX/raw/main/addons.xml.md5</checksum>
-			<datadir zip="true">https://github.com/twudat/Free-XXX/raw/main/zips/</datadir>
+			<info compressed="false">https://github.com/twudat/free-xxx/raw/main/addons.xml</info>
+			<checksum>https://github.com/twudat/free-xxx/raw/main/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/twudat/free-xxx/raw/main/zips/</datadir>
 		</dir>
 		<dir>
 			<info compressed="false">https://raw.githubusercontent.com/dobbelina/repository.dobbelina/master/addons.xml</info>
@@ -103,7 +103,7 @@
 		</dir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Free-XXX</summary>
+		<summary>free-xxx</summary>
 		<description>Repo For free-xxx-o-dus and other FREE Adult Kodi Plugins, Bought to you by @Twudat</description>
 		<disclaimer>Educational use only, not for public release.</disclaimer>
 		<platform>all</platform>

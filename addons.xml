@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.free-xxx-o-dus"
+<!-- <addon id="plugin.video.free-xxx-o-dus"
 	     name="FREE-XXX-O-DUS"
 	     version="5.00.022"
+	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668 : Set free by Twudat"> -->
+<addon id="plugin.video.free-xxx-o-dus"
+	     name="FREE-XXX-O-DUS"
+	     version="5.00.000"
 	     provider-name="Originally By : Echo Coder :: Revived By @Nemzzy668 : Set free by Twudat">
   <requires>
     <!-- <import addon="xbmc.python" version="2.24.0"/> -->
@@ -84,7 +88,7 @@
 	</extension>
 </addon>
 
-<addon id="repository.free-xxx" name="Free XXX" version="001" provider-name="@Twudat">
+<addon id="repository.free-xxx" name="Free XXX" version="1.00.00" provider-name="@Twudat">
 	<extension point="xbmc.addon.repository" name="free-xxx">
 		<dir>
         <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>

@@ -10,10 +10,12 @@ import dom_parser2
 import cache
 import log_utils
 import pyxbmct
+from resources.lib.modules.cacheclean import *
 #pyxbmct.skin.estuary = False
 pyxbmct = pyxbmct.addonwindow
 from url_dispatcher import URL_Dispatcher
 url_dispatcher = URL_Dispatcher()
+GitUrl = 'https://raw.githubusercontent.com/twudat/free-xxx/main/addons.xml'
 
 def parse_query(query):
     toint = ['page', 'download', 'favmode', 'channel', 'section']
@@ -50,7 +52,7 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
         conn = sqlite3.connect(chaturbatedb)
         conn.text_factory = str
         c = conn.cursor()
-        c.execute("CREATE TABLE IF NOT EXISTS chaturbate (name, url, image);")
+        # c.execute("CREATE TABLE IF NOT EXISTS chaturbate (name, url, image);")
         c.execute("SELECT * FROM chaturbate ORDER BY name ASC")
         chat_urls = []
         for (chat_name, chat_url, chat_icon) in c.fetchall():
@@ -219,6 +221,10 @@ def buildDir(items, content='dirs', cm=None, search=False, stopend=False, isVide
 
 @url_dispatcher.register('45')
 def depVersions():
+    goodCol="lime"
+    badCol="Red"
+    ver_color = badCol
+
 
     try: xbmc_version=xbmc.getInfoLabel("System.BuildVersion").split(' ')[0]
     except: 'Unknown'
@@ -229,9 +235,10 @@ def depVersions():
     try: python_version = sys.version.split(' ')[0]
     except: 'Unknown'
 
-    try:
-        xml1 = client.request('https://raw.githubusercontent.com/Colossal1/repository.colossus/master/addons.xml')
-        xml2 = client.request('https://raw.githubusercontent.com/Colossal1/repository.colossus.common/master/addons.xml')
+    # try:
+    if 1 == 1:
+        xml1 = client.request(GitUrl)
+        xml2 = client.request('https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml')
         lst = [('plugin.video.free-xxx-o-dus'),('script.freexxxodus.scrapers'),('script.freexxxodus.artwork'), \
                ('script.module.echo'),('script.module.resolveurl'),('script.module.resolveurl.xxx')]
 
@@ -247,19 +254,49 @@ def depVersions():
             addon_version = xbmcaddon.Addon('%s' % i).getAddonInfo('version')
             addon_description = xbmcaddon.Addon('%s' % i).getAddonInfo('description')
             pattern = r'''id=['"]%s['"][\w\s='"-]+version=['"]([^'"]+)['"]''' % addon_id
+
+
             try:
                 cur_ver = re.findall(pattern, xml1)[0]
             except:
+                cur_ver = 'Unknown.'
                 try:
                     cur_ver = re.findall(pattern, xml2)[0]
-                except: cur_ver = 'Unknown'
+                except:
+                    cur_ver = 'Unknown'
+            try:
+                in_v = int(addon_version.replace('.',''))
+                cur_v = int(cur_ver.replace('.',''))
+                try:
+                    if in_v < cur_v: ver_color = badCol
+                    else:
+                        ver_color = goodCol
+                except:
+                    ver_color = badCol
 
-            in_v = int(addon_version.replace('.',''))
-            cur_v = int(cur_ver.replace('.',''))
-            if in_v < cur_v: ver_color = 'orangered'
-            else: ver_color = 'lime'
-            icon = translatePath(os.path.join('special://home/addons', addon_id + '/icon.png'))
-            c += [(kodi.giveColor(addon_name,'white',True) + kodi.giveColor('| Installed: ','white') + kodi.giveColor(addon_version,ver_color,True) + ' - ' + kodi.giveColor('Available: ','white',True) + kodi.giveColor(cur_ver,'pink',True), icon, kodi.addonfanart, addon_description)]
+
+                icon = translatePath(os.path.join('special://home/addons', addon_id + '/icon.png'))
+
+                infotext="%s: %s "% ( kodi.giveColor(addon_name,'white',True),
+                                      kodi.giveColor('Installed: ','white'))
+
+
+                if ver_color == goodCol:
+                    infotext="%s v%s - %s" % (infotext,
+                                            kodi.giveColor(addon_version,ver_color,True),
+                                            kodi.giveColor("Up To Date!",'white',True))
+                else:
+                    infotext="%s %s - %s You should have %s" % (infotext,
+                                                kodi.giveColor(addon_version,'cyan',True),
+                                                kodi.giveColor("Out of Date!",ver_color,True),
+                                                kodi.giveColor(cur_ver,'cyan',True))
+
+
+
+                c += [(infotext , icon, kodi.addonfanart, addon_description)]
+            except:
+                c += [(infotext, icon, kodi.addonfanart, addon_description)]
+
 
         dirlst = []
 
@@ -267,13 +304,12 @@ def depVersions():
             dirlst.append({'name': kodi.giveColor(e[0],'white'), 'url': 'None', 'mode': 999, 'icon': e[1], 'fanart': e[2], 'description': e[3], 'folder': False})
 
         buildDir(dirlst)
-    except:
-        kodi.notify(msg='Error opening directory.', sound = True)
-        quit()
+    # except:
+    #     kodi.notify(msg='Error opening directory.', sound = True)
+    #     quit()
 
 @url_dispatcher.register('19')
 def showSettings():
-
     kodi.show_settings()
     kodi.refresh_container()
 
@@ -338,35 +374,45 @@ def setView(name):
 
 @url_dispatcher.register('17',['url'])
 def viewDialog(url):
-
-    global msg_text
-
-    if url.startswith('http'): msg_text = client.request(url)
-    else:
-        with open(url,mode='r')as f: msg_text = f.read()
+    msg_text=""
+    try:
+        if url.startswith('http'):
+            msg_text = client.request(url)
+        else:
+            with open(url,mode='r')as f: msg_text = f.read()
+    except:
+        msg_text="Changelog Not Found!"
     from resources.lib.pyxbmct_.github import xxxtext
     #xxxtext.TextWindow(msg_text)
-    window = TextBox('FREE-XXX-O-DUS')
+    window = TextBox(Message=msg_text)
+    window.doModal()
+    del window
+
+
+@url_dispatcher.register('49')
+def CleanUp():
+    Clear_Cache()
+    # global msg_text
+    msg_text="Cached thumnails have ben purged\nOther cache cleaning functions yet to be implemented"
+    window = TextBox(Message=msg_text)
     window.doModal()
     del window
 
 class TextBox(pyxbmct.AddonDialogWindow):
-
-    def __init__(self, title='FREE-XXX-O-DUS'):
+    def __init__(self, title='FREE-XXX-O-DUS',Message=None):
         super(TextBox, self).__init__(title)
         self.setGeometry(950, 600, 10, 30, 0, 5, 5)
-        self.set_info_controls()
+        self.set_info_controls(Message)
         self.set_active_controls()
         self.set_navigation()
         self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
 
-    def set_info_controls(self):
-
+    def set_info_controls(self,msg):
         Background   = pyxbmct.Image(translatePath(os.path.join('special://home/addons/script.freexxxodus.artwork', 'resources/art/dialog/bg.jpg')))
         self.placeControl(Background, 0, 0, 10, 30)
         self.textbox = pyxbmct.TextBox()
         self.placeControl(self.textbox, 0, 1, 9, 28)
-        self.textbox.setText(msg_text)
+        self.textbox.setText(msg)
         self.textbox.autoScroll(1000, 2000, 1000)
 
     def set_active_controls(self):

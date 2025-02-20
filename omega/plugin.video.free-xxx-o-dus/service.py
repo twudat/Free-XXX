@@ -4,7 +4,7 @@ from six import PY2
 import  re, os, time, urllib
 import sqlite3
 translatePath = xbmc.translatePath if PY2 else xbmcvfs.translatePath
-
+# Chaturbate monitoringe
 try:
     addon = xbmcaddon.Addon()
     get_setting = addon.getSetting
@@ -17,10 +17,8 @@ try:
     conn = sqlite3.connect(chaturbatedb)
     c = conn.cursor()
     try:
-        xbmc.log('FREE-XXX-O-DUS: Creating Chaturbate table', xbmc.LOGNOTICE)
         c.executescript("CREATE TABLE IF NOT EXISTS chaturbate (name, url, image);")
     except:
-        xbmc.log('FREE-XXX-O-DUS: Failed to Create Chaturbate table', xbmc.LOGNOTICE)
         pass
     conn.close()
 

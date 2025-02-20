@@ -14,7 +14,7 @@ import requests
 from resources.lib.modules import downloaderrepo as tools
 from resources.lib.modules import extract
 from resources.lib.modules import utils
-from resources.lib.modules import menus
+from resources.lib.modules import mainmenu
 from resources.lib.modules import parental
 from resources.lib.modules import firstStart
 from resources.lib.modules import addon_able

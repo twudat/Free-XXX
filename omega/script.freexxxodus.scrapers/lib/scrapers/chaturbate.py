@@ -28,7 +28,7 @@ search_tag   = 0
 chaturbate_icon = translatePath(os.path.join('special://home/addons/script.freexxxodus.artwork/resources/art/', 'main/chaturbate.png'))
 
 import sqlite3
-databases = translatePath(os.path.join('special://profile/addon_data/plugin.video.XXX-O-DUS', 'databases'))
+databases = translatePath(os.path.join('special://profile/addon_data/plugin.video.free-xxx-o-dus', 'databases'))
 chaturbatedb = translatePath(os.path.join(databases, 'chaturbate.db'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
@@ -42,9 +42,9 @@ conn.close()
 
 @utils.url_dispatcher.register('%s' % menu_mode)
 def menu():
-    
+
     lover.checkupdates()
-    
+
     url = 'https://chaturbate.com/api/ts/hashtags/tag-table-data/?sort=&page=1&g=&limit=100'
     #r = requests.get(url, headers=headers).json()
     link = requests.get(url,headers=headers).json()
@@ -64,11 +64,11 @@ def menu():
         except Exception as e:
             log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
     #dialog.ok("DIRLIST",str(dirlst))
-    if dirlst: buildDirectory(dirlst)    
+    if dirlst: buildDirectory(dirlst)
     else:
         kodi.notify(msg='No Menu Items Found')
         quit()
-        
+
 @utils.url_dispatcher.register('%s' % content_mode,['url'],['searched'])
 def content(url,searched=False):
     link = requests.get(url,headers=headers).json()
@@ -89,16 +89,16 @@ def content(url,searched=False):
         except Exception as e:
             pass
             #log_utils.log('Error adding menu item %s in %s:: Error: %s' % (name.title(),base_name.title(),str(e)), log_utils.LOGERROR)
-    
+
     if dirlst: buildDirectory(dirlst, stopend=True, isVideo = False, isDownloadable = False, chaturbate = True)
     else:
         kodi.notify(msg='No Content Found')
         quit()
-        
+
     search_pattern = '''<li><a\s*href=['"]([^'"]+)['"]\s*class=['"]next endless_page_link'''
     parse = base_domain
     helper.scraper().get_next_page(content_mode,url,search_pattern,filename,parse)
-    
+
 @utils.url_dispatcher.register('302', ['url'])
 def byTags(url):
     #dialog.ok("URL",str(url))
@@ -107,7 +107,7 @@ def byTags(url):
     tags = soup.find_all("a", href=lambda href: href and "/tag/" in href)
     #dialog.ok("TAGS",str(tags))
     dirlst = []
-    
+
     for i in tags:
         try:
             name = i.text.title()
@@ -118,19 +118,19 @@ def byTags(url):
             dirlst.append({'name': name, 'url': url2, 'mode': content_mode, 'icon': icon, 'fanart': fanarts, 'description': name, 'folder': True})
         except Exception: pass
             #log_utils.log('Error adding menu item %s in %s:: Error: %s' % (i[1].title(),base_name.title(),str(e)), log_utils.LOGERROR)
-    
-    if dirlst: 
+
+    if dirlst:
         try:
             np = re.findall('''<a\s*href=['"]([^'"]+)['"]\s*class="next.*?page''',c)[0]
             nextpage = base_domain+np
             dirlst.append({'name': 'Next Page -->', 'url': nextpage, 'mode': 302, 'icon': icon, 'fanart': fanarts, 'description': 'View more tags.', 'folder': True})
-        except: 
+        except:
             log_utils.log('No next page link found for Chaturbate :: %s ' % (url), log_utils.LOGNOTICE)
         buildDirectory(dirlst)
     else:
         kodi.notify(msg='No Content Found')
         quit()
-        
+
 @utils.url_dispatcher.register('30')
 def getMonitoring():
 
@@ -161,8 +161,8 @@ def getMonitoring():
                 iconlist.append(iconimage)
                 countlist.append('0')
                 combinedlists = list(zip(countlist,namelist,urllist,iconlist))
-            else: 
-                try: 
+            else:
+                try:
                     last_seen=re.compile("<dt>Last Broadcast:<\/dt><dd>(.+?)<\/dd>").findall(r)[0]
                 except: last_seen = "Unknown"
                 namelist.append(name + '|SPLIT|' + last_seen)
@@ -170,36 +170,36 @@ def getMonitoring():
                 iconlist.append(iconimage)
                 countlist.append('1')
                 combinedlists = list(zip(countlist,namelist,urllist,iconlist))
-        except: 
+        except:
             namelist.append(name)
             urllist.append(url)
             iconlist.append(iconimage)
             countlist.append('2')
             combinedlists = list(zip(countlist,namelist,urllist,iconlist))
-        i += 1        
+        i += 1
         if kodi.dp.iscanceled(): break
 
     kodi.dp.close()
-    
+
     dirlist.append({'name': kodi.giveColor('Add A Performer To Monitor','white',True), 'url': 'None', 'mode': 31, 'icon': chaturbate_icon, 'fanart': fanarts, 'folder': False})
     dirlist.append({'name': kodi.giveColor('Delete All Performers from List','white',True), 'url': 'None', 'mode': 33, 'icon': chaturbate_icon, 'fanart': fanarts, 'folder': False})
 
-    if combinedlists: 
+    if combinedlists:
         tup = sorted(combinedlists, key=lambda x: (int(x[0]),x[1]),reverse=False)
         for count,title,url,iconimage in tup:
             url += '|CHAT|%s|CHAT|%s' % (base_name,title)
             if count == '0':
-                title = '[COLOR pink][B]%s is online now![/B][/COLOR]' % title 
+                title = '[COLOR pink][B]%s is online now![/B][/COLOR]' % title
             elif count == '1':
                 title,last_seen = title.split('|SPLIT|')
                 title = '[COLOR white][B]%s[/B][/COLOR] - Offline! - Last Broadcast: %s' % (title,last_seen)
             else: title = '[COLOR white][B]%s[/B][/COLOR] - Error Checking!' % title
-    
+
             dirlist.append({'name': title, 'url': url, 'mode': player_mode, 'icon': iconimage, 'fanart': fanarts, 'folder': False})
-     
+
     buildDirectory(dirlist, isDownloadable=False, isVideo=True, chaturbate=True)
 
-@utils.url_dispatcher.register('32')  
+@utils.url_dispatcher.register('32')
 def searchUser():
 
     user = kodi.get_keyboard('Enter Username')
@@ -213,14 +213,14 @@ def searchUser():
         kodi.dialog.ok(kodi.get_name(), 'No username entered. Please try again.')
         quit()
 
-@utils.url_dispatcher.register('31')  
+@utils.url_dispatcher.register('31')
 def followUser():
 
     user = kodi.get_keyboard('Enter Username')
     if user:
         user = user.replace(' ','_')
         xbmc.executebuiltin("ActivateWindow(busydialog)")
-        
+
         conn = sqlite3.connect(chaturbatedb)
         conn.text_factory = str
         c = conn.cursor()
@@ -253,8 +253,8 @@ def followUser():
         kodi.dialog.ok(kodi.get_name(), 'No username entered. Please try again.')
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         quit()
-            
-@utils.url_dispatcher.register('101', ['chat','chatmode','name','url','iconimage','folder'])  
+
+@utils.url_dispatcher.register('101', ['chat','chatmode','name','url','iconimage','folder'])
 def monitorRunner(chat,chatmode,name,url,img,_folder):
     try: name = name.split(' - ')[0]
     except: pass
@@ -267,7 +267,7 @@ def monitorRunner(chat,chatmode,name,url,img,_folder):
         log_utils.log('Deleting %s from chaturbate monitoring' % (url), log_utils.LOGNOTICE)
         kodi.notify('Chaturbate','Performer removed from monitoring.', sound=True, icon_path=chaturbate_icon)
     xbmc.executebuiltin('Container.Refresh')
-        
+
 def addPerformer(name,url,img):
     conn = sqlite3.connect(chaturbatedb)
     conn.text_factory = str
@@ -283,7 +283,7 @@ def delPerformer(url):
     c.execute("DELETE FROM chaturbate WHERE url = '%s'" % url)
     conn.commit()
     conn.close()
- 
+
 @utils.url_dispatcher.register('33')
 def clearMonitor():
 

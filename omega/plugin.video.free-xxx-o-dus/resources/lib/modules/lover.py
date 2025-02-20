@@ -23,11 +23,14 @@ REPO = translatePath(os.path.join(
     'special://home/addons', 'repository.free-xxx-o-dus'))
 
 
+
+# This bit really only get called from scrapers
 def checkupdates():
     s = open(checkfile, 'r').read()
     a = re.findall('<addon\s+id=.+?version="(.*?)"', s, flags=re.DOTALL)[0]
     b = requests.get(
-        'https://raw.githubusercontent.com/twudat/free-xxx-o-dus/main/addons.xml').text
+        'https://github.com/twudat/free-xxx/raw/main/addons.xml').text
+        # 'https://raw.githubusercontent.com/twudat/free-xxx-o-dus/main/addons.xml').text
 
     c = re.findall(
         '<addon\s+id="plugin.video.free-xxx-o-dus".+?version="(.*?)"', b, flags=re.DOTALL)[0]

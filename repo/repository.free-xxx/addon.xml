@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="repository.free-xxx" name="Free XXX" version="001" provider-name="@Twudat">
+<addon id="repository.free-xxx" name="Free XXX" version="1.00.00" provider-name="@Twudat">
 	<extension point="xbmc.addon.repository" name="free-xxx">
 		<dir>
         <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
